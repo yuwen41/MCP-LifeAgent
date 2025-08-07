@@ -1,14 +1,52 @@
 ****mcp_agent****
-**openai**
-#set your openai API key
-export OPENAI_API_KEY= ''
+Project informations:
+1) mcp_agent.py: some set up for creating MCP agent (you do not need to run this file)
+2) mcp_client.py: main file to use AI agent (you need to run this file)
+  - open a terminal and enter 'WSL'
+  - set your openai API key (command: export OPENAI_API_KEY= '')
+  - run the file (command: python3 mcp_client.py)
+3) server_multi_tools.py: main file to define the tools can be used by AI agent (you need to run this file) 
+  - open a terminal and enter 'WSL'
+  - set your google API key (command: export GOOGLE_API_KEY='')
+  - set your google CSE ID (command: export GOOGLE_CSE_ID='')
+  - set your gmail password (command: export APP_PASSWORD='')
 
-****server_multi_tools****
-**google**
-#set your google API key and ID
-export GOOGLE_API_KEY=''
-export GOOGLE_CSE_ID=''
+User Guides:
+1) download WSL to access the power of both Windows and Linux at the same time on a Windows machine
+  a) open your terminal
+  b) command: wsl --install
 
-**gmail**
-#set your gmail password
-export APP_PASSWORD=''
+2) Openai API key: get your API key on this webside: https://openai.com/api/
+
+3) Google API key:
+  a) Go to your Google Cloud Console 
+  b) In the sidebar, go to APIs & Services → Enabled APIs & services
+  c) Click + ENABLE APIS AND SERVICES
+  d) Search for "Custom Search API", click on it, and click ENABLE
+  e) click Try this API and click Get a Key to get your Google API key
+
+4) Google CSE ID
+  a) Go to https://programmablesearchengine.google.com/about/
+  b) Click Get started
+  c) Click Create your first search engine! and get your CSE ID
+
+5) Gmail App Password
+  a) Enable 2-Step Verification
+    i) Go to https://myaccount.google.com/security
+    ii) click "2-Step Verification"
+    iii) Follow the instructions to turn it on
+  b) Generate an App Password
+    i) Go to https://myaccount.google.com/apppasswords
+    ii) Under "Select app", choose: App: Mail; Device: Other (Custom name) → type something like PythonScript
+    iii) You’ll get a 16-character App Password
+
+6) How to Get credentials.json
+  a) Go to Google Cloud Console
+  b) Go to APIs & Services → Library → Search for Gmail API
+  c) Click Enable
+  d) Click Create credentials
+  e) Set up OAuth client ID and choose Desktop app as application type
+  f) Download the generated credentials.json file （ensure in the same path of server_multi_tools.py)
+
+
+
