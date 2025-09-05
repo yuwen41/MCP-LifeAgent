@@ -33,10 +33,6 @@ async def build_agent():
             "url": "http://localhost:8001/mcp/",
             "transport": "streamable_http",
         },
-        # "math": {
-        #     "url": "http://localhost:8000/mcp/",
-        #     "transport": "streamable_http",
-        # },
     })
 
     tools = await client.get_tools()
@@ -44,4 +40,5 @@ async def build_agent():
 
     agent = create_react_agent("openai:gpt-4.1", tools)
     return agent
+
 
