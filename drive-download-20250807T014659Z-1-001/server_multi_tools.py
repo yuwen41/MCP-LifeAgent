@@ -24,7 +24,7 @@ mcp = FastMCP("Email/Weather/GoogleSearch", port=8001)
 #google search
 @mcp.tool()
 async def google_search(input: str) -> str:
-    '''使用 Google Search API 進行搜尋(僅在Agent無法針對現有知識進行回答時使用),並返回結果。'''
+    '''Use the Google Search API to conduct a search (only when the agent cannot answer using its existing knowledge), and return the results'''
     print('[Google Search tool used]: Search query is', input)
 
     # 從環境變數讀取金鑰
@@ -171,4 +171,5 @@ async def fetch_inbox(n: int = 5) -> str:
     return "\n\n".join(summary_list) if summary_list else "📭 沒有找到信件。"
 
 if __name__ == "__main__":
+
     mcp.run(transport="streamable-http")
