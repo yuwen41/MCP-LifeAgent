@@ -68,7 +68,7 @@ async def confirm_send_email(receiver_email: str, subject: str, message: str) ->
     app_password = os.getenv("APP_PASSWORD")
 
     # Email content configuration
-    sender_email = "set your email adress"
+    sender_email = "set your email address"
     app_password = app_password
 
     # Create the email using UTF-8 encoding
@@ -173,4 +173,5 @@ async def fetch_inbox(n: int = 5) -> str:
 if __name__ == "__main__":
 
     mcp.run(transport="streamable-http")
+
 
