@@ -1,139 +1,143 @@
-# Langchain_FastMCP
+🌐 MCP Agent
 
-## 🚀 mcp_agent
+An AI Agent powered by MCP (Model Context Protocol) that integrates multiple tools, including OpenAI, Google Search, and Gmail.
 
-An AI Agent powered by MCP (Model Context Protocol) that integrates multiple tools including OpenAI, Google Search, and Gmail.  
 This repository contains the setup for the MCP agent, client, and multi-tool server.
 
----
+📂 Project Structure
 
-## 📂 Project Structure
+mcp_agent.py
+Setup file for creating the MCP agent (no need to run this file directly).
 
-- **mcp_agent.py**  
-  Setup for creating the MCP agent *(you do not need to run this file)*  
+mcp_client.py
+Main entry point to use the AI agent.
 
-- **mcp_client.py**  
-  Main entry point to use the AI agent *(you need to run this file)*  
+Run this file to interact with the MCP Agent.
 
-- **server_multi_tools.py**  
-  Defines the tools that can be used by the AI agent *(you need to run this file)*  
+server_multi_tools.py
+Defines the tools available to the AI agent.
 
----
+Run this file to enable Google Search and Gmail tools.
 
-## ⚙️ Installation & Setup
+⚙️ Installation & Setup
+1. Install WSL (Windows Subsystem for Linux)
 
-### 1. Install WSL (Windows Subsystem for Linux)
-To access the power of both Windows and Linux on a Windows machine:
+To use Linux tools on Windows:
 
-```bash
 wsl --install
-📖 WSL official installation guide
 
-### 2. Install Python
-Download and install Python from: python.org/downloads
 
-Then, in your project directory, install required dependencies:
+👉 Official WSL installation guide
 
-bash
-Copy code
+2. Install Python & Dependencies
+
+Download Python: python.org/downloads
+
+Install required dependencies:
+
 pip install -r requirements.txt
-### 3. Environment Variables
-You can either export them manually in terminal, or use a .env file for convenience.
 
-Manual Export (WSL terminal)
-bash
-Copy code
-export OPENAI_API_KEY="your_api_key_here"
-export GOOGLE_API_KEY="your_google_api_key_here"
-export GOOGLE_CSE_ID="your_cse_id_here"
-export APP_PASSWORD="your_generated_app_password_here"
-.env.example (recommended)
-Create a file named .env.example (copy it to .env and fill in your values):
+3. Environment Variables
 
-### ini
-Copy code
-# .env.example
+Before running the scripts, set up the following environment variables:
 
-# OpenAI API Key (from https://openai.com/api/)
-OPENAI_API_KEY=your_api_key_here
+# OpenAI
+export OPENAI_API_KEY="your_openai_api_key"
 
-# Google Custom Search API Key
-GOOGLE_API_KEY=your_google_api_key_here
+# Google Search
+export GOOGLE_API_KEY="your_google_api_key"
+export GOOGLE_CSE_ID="your_google_cse_id"
 
-# Google Custom Search Engine ID (CSE ID)
-GOOGLE_CSE_ID=your_cse_id_here
+# Gmail
+export APP_PASSWORD="your_gmail_app_password"
 
-# Gmail App Password (generated after enabling 2FA)
-APP_PASSWORD=your_generated_app_password_here
 
-# Gmail address used in server_multi_tools.py
-SENDER_EMAIL=your_email@gmail.com
-4. Gmail API (for email summarization)
-4.1 Get credentials.json
-In Google Cloud Console, search for Gmail API → Enable
+Also set your Gmail address in sender_email inside server_multi_tools.py.
 
-Click Create Credentials → OAuth Client ID
+🔑 How to Get Keys & Credentials
+1. OpenAI API Key
 
-Choose Desktop app as the application type
+Get your API key: OpenAI API
 
-Download the credentials.json file
+2. Google API Key
 
-Place it in the same directory as server_multi_tools.py
+Go to Google Cloud Console
 
-4.2 Get token.json
-token.json will be automatically generated when you run server_multi_tools.py for the first time.
+Navigate to: APIs & Services → Enabled APIs & services
 
-It stores your OAuth authentication tokens.
+Click + ENABLE APIS AND SERVICES
 
-▶️ Usage
-Step 1: Run the Multi-Tool Server
-Open a terminal (WSL) and run:
+Search for Custom Search API, enable it
 
-bash
-Copy code
-python3 server_multi_tools.py
-Step 2: Run the MCP Client
-Open another terminal (WSL) and run:
+Click Get a Key to generate your API key
 
-bash
-Copy code
+3. Google CSE ID (Custom Search Engine)
+
+Go to Google Programmable Search Engine
+
+Click Get started → Create your first search engine!
+
+Copy your CSE ID
+
+4. Gmail App Password
+
+Enable 2-Step Verification
+
+Google Security Settings
+
+Generate an App Password
+
+Go to App Passwords
+
+Choose App: Mail and Device: Other (Custom name)
+
+Copy the 16-character password
+
+5. Gmail API (for Email Summarization)
+(a) Get credentials.json
+
+In Google Cloud Console
+
+Go to APIs & Services → Library
+
+Search Gmail API, enable it
+
+Create credentials → OAuth Client ID
+
+Choose Desktop App as application type
+
+Download credentials.json
+
+Place it in the same folder as server_multi_tools.py
+
+(b) Generate token.json
+
+When you run server_multi_tools.py for the first time,
+it will prompt you to authenticate and automatically generate token.json
+
+🚀 Usage
+Run MCP Client
+# Open WSL
+wsl
+
+# Run client
 python3 mcp_client.py
-✅ Quick Commands
-Set environment variables manually:
 
-bash
-Copy code
-export OPENAI_API_KEY="..."
-export GOOGLE_API_KEY="..."
-export GOOGLE_CSE_ID="..."
-export APP_PASSWORD="..."
-Run tools:
+Run Multi-Tool Server
+# Open WSL
+wsl
 
-bash
-Copy code
+# Run server
 python3 server_multi_tools.py
-Run AI agent:
 
-bash
-Copy code
-python3 mcp_client.py
-🛠 Requirements
-Python 3.8+
+✅ Summary
 
-WSL (for Windows users)
+Install WSL and Python
 
-Packages in requirements.txt
+Install dependencies (pip install -r requirements.txt)
 
-Install all dependencies:
+Get API keys & credentials (OpenAI, Google, Gmail)
 
-bash
-Copy code
-pip install -r requirements.txt
-📌 Notes
-Make sure WSL is installed and you are running commands inside WSL terminal.
+Run mcp_client.py (main client)
 
-API keys and credentials should remain private (do not commit them to GitHub).
-
-mcp_agent.py is only for setup reference — you don’t need to run it directly.
-
-Always copy .env.example → .env and update values before running.
+Run server_multi_tools.py (multi-tool server)
