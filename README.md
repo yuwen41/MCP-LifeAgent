@@ -29,7 +29,7 @@ To access the power of both Windows and Linux on a Windows machine:
 wsl --install
 📖 WSL official installation guide
 
-2. Install Python
+### 2. Install Python
 Download and install Python from: python.org/downloads
 
 Then, in your project directory, install required dependencies:
@@ -37,7 +37,7 @@ Then, in your project directory, install required dependencies:
 bash
 Copy code
 pip install -r requirements.txt
-3. Environment Variables
+### 3. Environment Variables
 You can either export them manually in terminal, or use a .env file for convenience.
 
 Manual Export (WSL terminal)
@@ -50,7 +50,7 @@ export APP_PASSWORD="your_generated_app_password_here"
 .env.example (recommended)
 Create a file named .env.example (copy it to .env and fill in your values):
 
-ini
+### ini
 Copy code
 # .env.example
 
