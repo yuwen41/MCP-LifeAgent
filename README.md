@@ -1,126 +1,93 @@
-🚀 MCP Agent
+# 🚀 MCP Agent Project Guide
 
-An AI Agent powered by MCP (Model Context Protocol) that integrates multiple tools including OpenAI, Google Search, and Gmail.
+This repository contains the setup for an MCP (Model Context Protocol) agent, client, and multi-tool server.
 
-📂 Project Structure
+---
 
-mcp_agent.py
+## 📂 Project Structure
 
-Setup file for creating the MCP Agent (do not run this file directly)
+- **`mcp_agent.py`**  
+  Setup for creating the MCP agent *(you do not need to run this file)*  
 
-mcp_client.py
+- **`mcp_client.py`**  
+  Main entry point for using the AI agent *(you need to run this file)*  
+  1. Open a terminal and enter `wsl`  
+  2. Set your OpenAI API key:  
+     ```bash
+     export OPENAI_API_KEY=''
+     ```  
+  3. Run the client:  
+     ```bash
+     python3 mcp_client.py
+     ```
 
-Main entry point (you need to run this file)
+- **`server_multi_tools.py`**  
+  Defines the tools available for the AI agent *(you need to run this file)*  
+  1. Open a terminal and enter `wsl`  
+  2. Set the following environment variables:  
+     ```bash
+     export GOOGLE_API_KEY=''
+     export GOOGLE_CSE_ID=''
+     export APP_PASSWORD=''
+     ```  
+  3. Set your Gmail address inside the `sender_email` field of the script.
 
-Usage:
+---
 
-# Enter WSL
-wsl
+## 🛠️ User Setup Guide
 
-# Set OpenAI API key
-export OPENAI_API_KEY=''
+Before running the project, ensure the following:
 
-# Run the client
-python3 mcp_client.py
+1. **Install Python**  
+   - Download from: [python.org/downloads](https://www.python.org/downloads/)  
+   - Install dependencies:  
+     ```bash
+     pip install -r requirements.txt
+     ```
 
+2. **Install WSL (Windows Subsystem for Linux)**  
+   - Open terminal  
+   - Run:  
+     ```bash
+     wsl --install
+     ```  
+   - [WSL official installation guide](https://learn.microsoft.com/en-us/windows/wsl/install)
 
-server_multi_tools.py
+3. **OpenAI API Key**  
+   - Get your key from: [OpenAI API](https://openai.com/api/)
 
-Defines the tools available for the AI Agent (you need to run this file)
+4. **Google API Key (for Google Search)**  
+   - Go to **Google Cloud Console**  
+   - Navigate: **APIs & Services → Enabled APIs & services**  
+   - Click **+ ENABLE APIS AND SERVICES**  
+   - Search **Custom Search API** → **Enable**  
+   - Click **Try this API** → **Get a Key**  
 
-Usage:
+5. **Google CSE ID (Custom Search Engine)**  
+   - Visit: [Programmable Search Engine](https://programmablesearchengine.google.com/about/)  
+   - Click **Get started**  
+   - Create your first search engine → obtain **CSE ID**
 
-# Enter WSL
-wsl
+6. **Gmail App Password (for sending emails)**  
+   - Enable **2-Step Verification**  
+     - Go to: [Google Security Settings](https://myaccount.google.com/security)  
+     - Enable **2-Step Verification**  
+   - Generate an **App Password**  
+     - Go to: [Google App Passwords](https://myaccount.google.com/apppasswords)  
+     - Select **App: Mail**, **Device: Other (Custom name)** → e.g., *PythonScript*  
+     - Copy the generated 16-character App Password  
 
-# Set Google API key
-export GOOGLE_API_KEY=''
+7. **`credentials.json` (for Gmail summarization)**  
+   - Go to **Google Cloud Console**  
+   - Navigate: **APIs & Services → Library**  
+   - Search **Gmail API** → **Enable**  
+   - Create **OAuth Client ID** → Select **Desktop app**  
+   - Download the generated **`credentials.json`** file  
+   - Place it in the same directory as `server_multi_tools.py`
 
-# Set Google CSE ID
-export GOOGLE_CSE_ID=''
+8. **`token.json` (for Gmail summarization)**  
+   - This file will be **auto-generated** by the code in `server_multi_tools.py` upon first authentication.
 
-# Set Gmail App password
-export APP_PASSWORD=''
+---
 
-# Set Gmail sender email address inside the file
-sender_email = "your_email@gmail.com"
-
-🛠 Installation & Setup
-1. Install WSL (Windows Subsystem for Linux)
-
-Official guide: Microsoft WSL Install
-
-Command:
-
-wsl --install
-
-2. Install Python & dependencies
-
-Download Python: python.org/downloads
-
-Install required packages:
-
-pip install -r requirements.txt
-
-🔑 API Keys & Credentials
-1. OpenAI API Key
-
-Get your API key here: OpenAI API
-
-2. Google API Key (for search)
-
-Go to Google Cloud Console
-
-Navigate to APIs & Services → Enabled APIs & services
-
-Click + ENABLE APIS AND SERVICES
-
-Search for Custom Search API → Enable
-
-Click Get a Key to obtain your Google API Key
-
-3. Google CSE ID (for search)
-
-Go to Google Programmable Search Engine
-
-Click Get started
-
-Create a new search engine and obtain your CSE ID
-
-4. Gmail App Password (for sending emails)
-
-Enable 2-Step Verification
-
-Generate an App Password
-
-App: Mail
-
-Device: Other (Custom name) → e.g., PythonScript
-
-You’ll get a 16-character App Password
-
-5. credentials.json (for email summarization)
-
-Go to Google Cloud Console
-
-Navigate to APIs & Services → Library → Gmail API
-
-Enable Gmail API
-
-Create OAuth client ID → select Desktop app
-
-Download credentials.json and place it in the same directory as server_multi_tools.py
-
-6. token.json (for email summarization)
-
-This file will be automatically generated by the code in server_multi_tools.py
-
-✅ Summary
-
-At this point, your MCP Agent is fully configured with:
-
-OpenAI API (for LLM capabilities)
-
-Google Search API + CSE (for search functionality)
-
-Gmail API + App Password (for email sending & summarization)
+✅ You’re now ready to run the MCP Agent with Google Search and Gmail integration!
