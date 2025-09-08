@@ -1,6 +1,32 @@
 # 🚀 MCP Agent Project Guide
 
-This repository contains the setup for an MCP (Model Context Protocol) agent, client, and multi-tool server.
+The MCP Agent is an AI-powered assistant that integrates multiple tools into one system. It is designed to streamline information retrieval, communication, and productivity.
+
+✨ Core Features
+
+1. Google Search Integration
+
+   - Perform real-time web searches using Google’s Custom Search API.
+
+   - Retrieve accurate and up-to-date information directly from the internet.
+
+2. Weather Information
+
+   - Get current weather conditions and forecasts.
+
+   - Useful for quick daily updates or travel planning.
+
+3. Email Drafting & Sending
+
+   - Automatically generate well-structured email drafts.
+
+   - Send emails directly through Gmail using a secure App Password.
+
+4. Email Summarization
+
+   - Fetch received emails and summarize their content.
+
+   - Helps users quickly understand the main points without reading full messages.
 
 ---
 
@@ -71,10 +97,11 @@ Before running the project, ensure the following:
 6. **Gmail App Password (for sending emails)**  
    - Enable **2-Step Verification**  
      - Go to: [Google Security Settings](https://myaccount.google.com/security)  
-     - Enable **2-Step Verification**  
+     - Enable **2-Step Verification**
+     - Follow the instructions to turn it on
    - Generate an **App Password**  
      - Go to: [Google App Passwords](https://myaccount.google.com/apppasswords)  
-     - Select **App: Mail**, **Device: Other (Custom name)** → e.g., *PythonScript*  
+     - Select **App: Mail**, **Device: Other (Custom name)** → type something like *PythonScript*  
      - Copy the generated 16-character App Password  
 
 7. **`credentials.json` (for Gmail summarization)**  
