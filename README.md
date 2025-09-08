@@ -1,6 +1,6 @@
 # Langchain_FastMCP
 
-# ****mcp_agent****
+## 🚀 mcp_agent
 
 An AI Agent powered by MCP (Model Context Protocol) that integrates multiple tools including OpenAI, Google Search, and Gmail.  
 This repository contains the setup for the MCP agent, client, and multi-tool server.
