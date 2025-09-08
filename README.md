@@ -2,7 +2,7 @@
 
 The MCP Agent is an AI-powered assistant that integrates multiple tools into one system. It is designed to streamline information retrieval, communication, and productivity.
 
-✨ Core Features
+## ✨ Core Features
 
 1. Google Search Integration
 
