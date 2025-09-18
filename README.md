@@ -72,7 +72,8 @@ Before running the project, ensure the following:
 
 1. **Install Python**  
    - Download from: [python.org/downloads](https://www.python.org/downloads/)  
-   - Install dependencies:  
+
+2. **Install dependencies**  
      ```bash
      pip install -r requirements.txt
      ```
