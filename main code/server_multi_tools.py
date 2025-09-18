@@ -19,7 +19,22 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 
 
-mcp = FastMCP("Email/Weather/GoogleSearch", port=8001)
+mcp = FastMCP("Email/Calendar/Weather/GoogleSearch", port=8001)
+
+# shared OAuth tools for Google Calendar and Gmail
+def get_google_creds(scopes: list, token_file: str):
+    creds = None
+    if os.path.exists(token_file):
+        creds = Credentials.from_authorized_user_file(token_file, scopes)
+    if not creds or not creds.valid:
+        if creds and creds.expired and creds.refresh_token:
+            creds.refresh(Request())
+        else:
+            flow = InstalledAppFlow.from_client_secrets_file('credentials.json', scopes)
+            creds = flow.run_local_server(port=0)
+        with open(token_file, 'w') as token:
+            token.write(creds.to_json())
+    return creds
 
 #google search
 @mcp.tool()
@@ -40,53 +55,6 @@ async def google_search(input: str) -> str:
     )
     result = search.run(input)
     return result
-
-#Draft an email
-@mcp.tool()
-async def prepare_email(username: str, subject: str, message: str) -> str:
-    """Preview the email content and ask the user to confirm before sending"""
-    email_preview = (
-        "[📨 Email Preview]\n"
-        f"To: {username}\n"
-        f"Subject: {subject}\n"
-        "-------------------------\n"
-        f"{message}\n"
-        "-------------------------\n"
-        "Please confirm whether you want to send this email. If you need to modify the content, please specify the changes; if you want to send it, please say 'Yes'."
-    )
-    print("[Email preview created]")
-    return email_preview
-
-#Please confirm the email information and send it
-@mcp.tool()
-async def confirm_send_email(receiver_email: str, subject: str, message: str) -> str:
-    """Send the email after user confirmation"""
-    print('[Send email tool used] Recipient email:', receiver_email)
-    print(f"To: {receiver_email}\nMessage:\n{message}")
-
-    # Read the key from the environment variable
-    app_password = os.getenv("APP_PASSWORD")
-
-    # Email content configuration
-    sender_email = "set your email address"
-    app_password = app_password
-
-    # Create the email using UTF-8 encoding
-    message = MIMEText(message, "plain", "utf-8")
-    message["Subject"] = Header(subject, "utf-8")
-    message["From"] = sender_email
-    message["To"] = receiver_email
-
-    # Establish a secure connection with Gmail SMTP
-    try:
-        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
-            server.login(sender_email, app_password)
-            server.sendmail(sender_email, [receiver_email], message.as_string())
-        print("✅ Email sent successfully!")
-        return f"✅Email successfully sent to {receiver_email}!"
-    except Exception as e:
-        print("❌ Failed to send email：", e)
-        return f"❌ Failed to send email：{e}"
 
 #Query weather 
 @mcp.tool()
@@ -131,25 +99,62 @@ async def get_weather(city: str) -> str:
     except Exception as e:
         return f"⚠️ An error occurred during the query：{e}"
 
+#Draft an email
+@mcp.tool()
+async def prepare_email(username: str, subject: str, message: str) -> str:
+    """Preview the email content and ask the user to confirm before sending"""
+    email_preview = (
+        "[📨 Email Preview]\n"
+        f"To: {username}\n"
+        f"Subject: {subject}\n"
+        "-------------------------\n"
+        f"{message}\n"
+        "-------------------------\n"
+        "Please confirm whether you want to send this email. If you need to modify the content, please specify the changes; if you want to send it, please say 'Yes'."
+    )
+    print("[Email preview created]")
+    return email_preview
+
+#Confirm the email information and send it
+@mcp.tool()
+async def confirm_send_email(receiver_email: str, subject: str, message: str) -> str:
+    """Send the email after user confirmation"""
+    print('[Send email tool used] Recipient email:', receiver_email)
+    print(f"To: {receiver_email}\nMessage:\n{message}")
+
+    # Read the key from the environment variable
+    app_password = os.getenv("APP_PASSWORD")
+
+    # Email content configuration
+    sender_email = "set your email address here"
+    app_password = app_password
+
+    # Create the email using UTF-8 encoding
+    message = MIMEText(message, "plain", "utf-8")
+    message["Subject"] = Header(subject, "utf-8")
+    message["From"] = sender_email
+    message["To"] = receiver_email
+
+    # Establish a secure connection with Gmail SMTP
+    try:
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+            server.login(sender_email, app_password)
+            server.sendmail(sender_email, [receiver_email], message.as_string())
+        print("✅ Email sent successfully!")
+        return f"✅Email successfully sent to {receiver_email}!"
+    except Exception as e:
+        print("❌ Failed to send email：", e)
+        return f"❌ Failed to send email：{e}"
+
 #Email summary
 #Allows to read all emails in the user's Gmail, but not modify, delete or send
+
 SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
 
 @mcp.tool()
 async def fetch_inbox(n: int = 5) -> str:
     """Read the Gmail inbox and retrieve sender, subject, and brief content of the most recent N emails"""
-    creds = None
-
-    if os.path.exists('token.json'):
-        creds = Credentials.from_authorized_user_file('token.json', SCOPES)
-    if not creds or not creds.valid:
-        if creds and creds.expired and creds.refresh_token:
-            creds.refresh(Request())
-        else:
-            flow = InstalledAppFlow.from_client_secrets_file('credentials.json', SCOPES)
-            creds = flow.run_local_server(port=0)
-        with open('token.json', 'w') as token:
-            token.write(creds.to_json())
+    creds = get_google_creds(SCOPES_GMAIL, 'token_gmail.json')
 
     service = build('gmail', 'v1', credentials=creds)
 
@@ -170,8 +175,76 @@ async def fetch_inbox(n: int = 5) -> str:
 
     return "\n\n".join(summary_list) if summary_list else "📭 No emails found."
 
-if __name__ == "__main__":
+#calendar
 
+SCOPES_CALENDAR = ['https://www.googleapis.com/auth/calendar']
+
+# Add event on Google Calendar
+@mcp.tool()
+async def quick_add_event(
+    text: str,
+    calendar_id: str | None = None,
+) -> str:
+    
+    try:
+        cal_id = calendar_id or os.getenv("CALENDAR_ID", "primary")
+        
+        creds = get_google_creds(SCOPES_CALENDAR, 'token_calendar.json')
+        
+        service = build('calendar', 'v3', credentials=creds)
+
+        event = service.events().quickAdd(calendarId=cal_id, text=text).execute()
+        event_id = event.get("id", "")
+        summary = event.get("summary", "(No title)")
+        link = event.get("htmlLink", "")
+        start = (event.get("start") or {}).get("dateTime") or (event.get("start") or {}).get("date")
+        end = (event.get("end") or {}).get("dateTime") or (event.get("end") or {}).get("date")
+
+
+        return {
+                "status": "success",
+                "event_id": event_id,
+                "summary": summary,
+                "start": start,
+                "end": end,
+                "link": link,
+                "text": (
+                    "✅ QuickAdd created\n"
+                    f"🆔 Event ID: {event_id}\n"
+                    f"🗓 {summary}\n"
+                    f"   Start: {start}\n"
+                    f"   End:   {end}\n"
+                    f"🔗 {link}"
+                )
+            }
+
+    except Exception as e:
+        return f"❌ QuickAdd failed: {e}"
+
+# Delete event on Google Calendar
+@mcp.tool()
+async def delete_event(event_id: str, calendar_id: str | None = None) -> str:
+    try:
+        cal_id = calendar_id or os.getenv("CALENDAR_ID", "primary")
+
+        creds = get_google_creds(SCOPES_CALENDAR, 'token_calendar.json')
+        
+        service = build('calendar', 'v3', credentials=creds)
+
+        service.events().delete(calendarId=cal_id, eventId=event_id).execute()
+        return f"🗑️ Event deleted (Event ID: {event_id})"
+
+    except Exception as e:
+        return f"❌ Delete failed：{e}"
+
+
+if __name__ == "__main__":
     mcp.run(transport="streamable-http")
+
+
+
+
+
+
 
 

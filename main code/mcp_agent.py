@@ -30,7 +30,7 @@ def extract_invoked_tools(messages):
 async def build_agent():
     client = MultiServerMCPClient({
         "multi": {
-            "url": "http://localhost:8001/mcp/",
+            "url": "http://localhost:8001/mcp",
             "transport": "streamable_http",
         },
     })
@@ -40,5 +40,6 @@ async def build_agent():
 
     agent = create_react_agent("openai:gpt-4.1", tools)
     return agent
+
 
 
