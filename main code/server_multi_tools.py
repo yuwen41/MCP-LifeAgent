@@ -170,8 +170,76 @@ async def fetch_inbox(n: int = 5) -> str:
 
     return "\n\n".join(summary_list) if summary_list else "📭 No emails found."
 
+#calendar
+SCOPES_CALENDAR = ['https://www.googleapis.com/auth/calendar']
+
+
+# Add event on Google Calendar
+@mcp.tool()
+async def quick_add_event(
+    text: str,
+    calendar_id: str | None = None,
+) -> str:
+    
+    try:
+        cal_id = calendar_id or os.getenv("CALENDAR_ID", "primary")
+        creds = get_google_creds(SCOPES_CALENDAR, 'token_calendar.json')
+        service = build('calendar', 'v3', credentials=creds)
+
+
+        event = service.events().quickAdd(calendarId=cal_id, text=text).execute()
+        event_id = event.get("id", "")
+        summary = event.get("summary", "(No title)")
+        link = event.get("htmlLink", "")
+        start = (event.get("start") or {}).get("dateTime") or (event.get("start") or {}).get("date")
+        end = (event.get("end") or {}).get("dateTime") or (event.get("end") or {}).get("date")
+
+
+        return {
+                "status": "success",
+                "event_id": event_id,
+                "summary": summary,
+                "start": start,
+                "end": end,
+                "link": link,
+                "text": (
+                    "✅ QuickAdd created\n"
+                    f"🆔 Event ID: {event_id}\n"
+                    f"🗓 {summary}\n"
+                    f"   Start: {start}\n"
+                    f"   End:   {end}\n"
+                    f"🔗 {link}"
+                )
+            }
+
+
+
+
+    except Exception as e:
+        return f"❌ QuickAdd failed: {e}"
+
+# Delete event on Google Calendar
+@mcp.tool()
+async def delete_event(event_id: str, calendar_id: str | None = None) -> str:
+    try:
+        cal_id = calendar_id or os.getenv("CALENDAR_ID", "primary")
+
+
+        creds = get_google_creds(SCOPES_CALENDAR, 'token_calendar.json')
+        service = build('calendar', 'v3', credentials=creds)
+
+
+        service.events().delete(calendarId=cal_id, eventId=event_id).execute()
+        return f"🗑️ Event deleted (Event ID: {event_id})"
+
+
+    except Exception as e:
+        return f"❌ Delete failed：{e}"
+
+
 if __name__ == "__main__":
 
     mcp.run(transport="streamable-http")
+
 
 
