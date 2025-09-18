@@ -188,6 +188,7 @@ async def quick_add_event(
         cal_id = calendar_id or os.getenv("CALENDAR_ID", "primary")
         
         creds = get_google_creds(SCOPES_CALENDAR, 'token_calendar.json')
+        
         service = build('calendar', 'v3', credentials=creds)
 
         event = service.events().quickAdd(calendarId=cal_id, text=text).execute()
@@ -225,6 +226,7 @@ async def delete_event(event_id: str, calendar_id: str | None = None) -> str:
         cal_id = calendar_id or os.getenv("CALENDAR_ID", "primary")
 
         creds = get_google_creds(SCOPES_CALENDAR, 'token_calendar.json')
+        
         service = build('calendar', 'v3', credentials=creds)
 
         service.events().delete(calendarId=cal_id, eventId=event_id).execute()
@@ -236,6 +238,7 @@ async def delete_event(event_id: str, calendar_id: str | None = None) -> str:
 
 if __name__ == "__main__":
     mcp.run(transport="streamable-http")
+
 
 
 
