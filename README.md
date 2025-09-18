@@ -1,6 +1,6 @@
-# 🚀 MCP LifeAgent Project Guide
+# 🚀 MCP-LifeAgent Project Guide
 
-MCP LifeAgent is an AI-powered assistant that integrates multiple tools into one system. It is designed to streamline information retrieval, communication, and productivity.
+MCP-LifeAgent is an AI-powered assistant that integrates multiple tools into one system. It is designed to streamline information retrieval, communication, and productivity.
 
 ## ✨ Core Features
 
