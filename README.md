@@ -29,7 +29,10 @@ The MCP Agent is an AI-powered assistant that integrates multiple tools into one
    - Helps users quickly understand the main points without reading full messages.
 
 5. Managing Events on Google Calendar (Add & Delete)
-   - 
+   
+   - Add event on your google calendar.
+  
+   - Delete event on your google calendar.
 
 ---
 
