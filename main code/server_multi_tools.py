@@ -19,7 +19,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 
 
-mcp = FastMCP("Email/Weather/GoogleSearch", port=8001)
+mcp = FastMCP("Email/Calendar/Weather/GoogleSearch", port=8001)
 
 #google search
 @mcp.tool()
@@ -240,6 +240,7 @@ async def delete_event(event_id: str, calendar_id: str | None = None) -> str:
 if __name__ == "__main__":
 
     mcp.run(transport="streamable-http")
+
 
 
 
