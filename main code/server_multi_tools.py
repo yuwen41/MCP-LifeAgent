@@ -21,6 +21,21 @@ from googleapiclient.discovery import build
 
 mcp = FastMCP("Email/Calendar/Weather/GoogleSearch", port=8001)
 
+# shared OAuth tools for Google Calendar and Gmail
+def get_google_creds(scopes: list, token_file: str):
+    creds = None
+    if os.path.exists(token_file):
+        creds = Credentials.from_authorized_user_file(token_file, scopes)
+    if not creds or not creds.valid:
+        if creds and creds.expired and creds.refresh_token:
+            creds.refresh(Request())
+        else:
+            flow = InstalledAppFlow.from_client_secrets_file('credentials.json', scopes)
+            creds = flow.run_local_server(port=0)
+        with open(token_file, 'w') as token:
+            token.write(creds.to_json())
+    return creds
+
 #google search
 @mcp.tool()
 async def google_search(input: str) -> str:
@@ -68,7 +83,7 @@ async def confirm_send_email(receiver_email: str, subject: str, message: str) ->
     app_password = os.getenv("APP_PASSWORD")
 
     # Email content configuration
-    sender_email = "set your email address"
+    sender_email = "set your email address here"
     app_password = app_password
 
     # Create the email using UTF-8 encoding
@@ -138,18 +153,7 @@ SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
 @mcp.tool()
 async def fetch_inbox(n: int = 5) -> str:
     """Read the Gmail inbox and retrieve sender, subject, and brief content of the most recent N emails"""
-    creds = None
-
-    if os.path.exists('token.json'):
-        creds = Credentials.from_authorized_user_file('token.json', SCOPES)
-    if not creds or not creds.valid:
-        if creds and creds.expired and creds.refresh_token:
-            creds.refresh(Request())
-        else:
-            flow = InstalledAppFlow.from_client_secrets_file('credentials.json', SCOPES)
-            creds = flow.run_local_server(port=0)
-        with open('token.json', 'w') as token:
-            token.write(creds.to_json())
+    creds = get_google_creds(SCOPES_GMAIL, 'token_gmail.json')
 
     service = build('gmail', 'v1', credentials=creds)
 
@@ -182,9 +186,9 @@ async def quick_add_event(
     
     try:
         cal_id = calendar_id or os.getenv("CALENDAR_ID", "primary")
+        
         creds = get_google_creds(SCOPES_CALENDAR, 'token_calendar.json')
         service = build('calendar', 'v3', credentials=creds)
-
 
         event = service.events().quickAdd(calendarId=cal_id, text=text).execute()
         event_id = event.get("id", "")
@@ -220,22 +224,19 @@ async def delete_event(event_id: str, calendar_id: str | None = None) -> str:
     try:
         cal_id = calendar_id or os.getenv("CALENDAR_ID", "primary")
 
-
         creds = get_google_creds(SCOPES_CALENDAR, 'token_calendar.json')
         service = build('calendar', 'v3', credentials=creds)
 
-
         service.events().delete(calendarId=cal_id, eventId=event_id).execute()
         return f"🗑️ Event deleted (Event ID: {event_id})"
-
 
     except Exception as e:
         return f"❌ Delete failed：{e}"
 
 
 if __name__ == "__main__":
-
     mcp.run(transport="streamable-http")
+
 
 
 
