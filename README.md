@@ -118,8 +118,15 @@ Before running the project, ensure the following:
    - Download the generated **`credentials.json`** file  
    - Place it in the same directory as `server_multi_tools.py`
 
-8. **`token.json` (for Gmail summarization)**  
-   - This file will be **auto-generated** by the code in `server_multi_tools.py` upon first authentication.
+8. **`token_gmail.json` (for Gmail)**  
+   - When you run a Gmail-related tool for the first time (e.g., quick_add_event), you will be automatically prompted to copy and paste the authorization URL into a browser and enter the verification code
+   - Once authorization is complete, a token_gmail.json file will be generated in your project directory
+   - For subsequent runs, the program will automatically use this file for authentication, so you won’t need to log in again
+  
+9. **`token_gmail.json` (for Google Calendar)**  
+   - When you run a Calendar-related tool for the first time (e.g., quick_add_event), you will be automatically prompted to copy and paste the authorization URL into a browser and enter the verification code
+   - Once authorization is complete, a token_calendar.json file will be generated in your project directory
+   - For subsequent runs, the program will automatically use this file for authentication, so you won’t need to log in again
 
 ---
 
