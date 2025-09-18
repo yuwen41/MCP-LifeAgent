@@ -30,9 +30,9 @@ The MCP Agent is an AI-powered assistant that integrates multiple tools into one
 
 5. Managing Events on Google Calendar (Add & Delete)
    
-   - Add event on your google calendar.
+   - Add a new event to Google Calendar
   
-   - Delete event on your google calendar.
+   - Delete an event from your Google Calendar
 
 ---
 
@@ -123,7 +123,7 @@ Before running the project, ensure the following:
      - Navigate: **APIs & Services → Library**  
      - Search **Gmail API** → **Enable**  
      - Create **OAuth Client ID** → Select **Desktop app**  
-     - As you already downloaded  **`credentials.json`** file during the Gmail setup, you don’t need to download it again.
+     - As you already downloaded  **`credentials.json`** file during the Gmail setup, you don’t need to download it again
 
 9. **`token_gmail.json` (for Gmail)**  
    - When you run a Gmail-related tool for the first time (e.g., quick_add_event), you will be automatically prompted to copy and paste the authorization URL into a browser and enter the verification code
