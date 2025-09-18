@@ -70,30 +70,29 @@ OmniAssist is an AI-powered assistant that integrates multiple tools into one sy
 
 Before running the project, ensure the following:
 
-1. **Install Python**  
-   - Download from: [python.org/downloads](https://www.python.org/downloads/)  
-
-2. **Install dependencies**  
+1. **Install Python and Dependencies**  
+   - Download Python from: [python.org/downloads](https://www.python.org/downloads/)
+   - Download dependencies
      ```bash
      pip install -r requirements.txt
      ```
 
-3. **OpenAI API Key**  
+2. **OpenAI API Key**  
    - Get your key from: [OpenAI API](https://openai.com/api/)
 
-4. **Google API Key (for Google Search)**  
+3. **Google API Key (for Google Search)**  
    - Go to **Google Cloud Console**  
    - Navigate: **APIs & Services → Enabled APIs & services**  
    - Click **+ ENABLE APIS AND SERVICES**  
    - Search **Custom Search API** → **Enable**  
    - Click **Try this API** → **Get a Key**  
 
-5. **Google CSE ID (Custom Search Engine)**  
+4. **Google CSE ID (Custom Search Engine)**  
    - Visit: [Programmable Search Engine](https://programmablesearchengine.google.com/about/)  
    - Click **Get started**  
    - Create your first search engine → obtain **CSE ID**
 
-6. **Gmail App Password (for sending emails)**  
+5. **Gmail App Password (for sending emails)**  
    - Enable **2-Step Verification**  
      - Go to: [Google Security Settings](https://myaccount.google.com/security)  
      - Enable **2-Step Verification**
@@ -103,7 +102,7 @@ Before running the project, ensure the following:
      - Select **App: Mail**, **Device: Other (Custom name)** → type something like *PythonScript*  
      - Copy the generated 16-character App Password  
 
-7. **`credentials.json` (shared OAuth tools for Google Calendar and Gmail)**
+6. **`credentials.json` (shared OAuth tools for Google Calendar and Gmail)**
    - Gmail
      - Go to **Google Cloud Console**  
      - Navigate: **APIs & Services → Library**  
@@ -118,13 +117,13 @@ Before running the project, ensure the following:
      - Create **OAuth Client ID** → Select **Desktop app**  
      - As you already downloaded  **`credentials.json`** file during the Gmail setup, you don’t need to download it again
 
-8. **`token_gmail.json` (for Gmail)**  
+7. **`token_gmail.json` (for Gmail)**  
    - When you run a Gmail-related tool for the first time, the authorization URL will be displayed in the output of **server_multi_tool.py**
    - You need to copy and paste the authorization URL into a browser and enter the verification code
    - Once authorization is complete, a **`token_gmail.json`** file will be generated in your project directory
    - For subsequent runs, the program will automatically use this file for authentication, so you won’t need to log in again
   
-9. **`token_calendar.json` (for Google Calendar)**  
+8. **`token_calendar.json` (for Google Calendar)**  
    - When you run a Calendar-related tool for the first time, the authorization URL will be displayed in the output of **server_multi_tool.py**
    - You need to copy and paste the authorization URL into a browser and enter the verification code
    - Once authorization is complete, a **`token_calendar.json`** file will be generated in your project directory
