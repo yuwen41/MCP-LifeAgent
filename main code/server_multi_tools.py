@@ -173,7 +173,6 @@ async def fetch_inbox(n: int = 5) -> str:
 #calendar
 SCOPES_CALENDAR = ['https://www.googleapis.com/auth/calendar']
 
-
 # Add event on Google Calendar
 @mcp.tool()
 async def quick_add_event(
@@ -212,9 +211,6 @@ async def quick_add_event(
                 )
             }
 
-
-
-
     except Exception as e:
         return f"❌ QuickAdd failed: {e}"
 
@@ -240,6 +236,7 @@ async def delete_event(event_id: str, calendar_id: str | None = None) -> str:
 if __name__ == "__main__":
 
     mcp.run(transport="streamable-http")
+
 
 
 
