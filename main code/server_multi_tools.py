@@ -56,53 +56,6 @@ async def google_search(input: str) -> str:
     result = search.run(input)
     return result
 
-#Draft an email
-@mcp.tool()
-async def prepare_email(username: str, subject: str, message: str) -> str:
-    """Preview the email content and ask the user to confirm before sending"""
-    email_preview = (
-        "[📨 Email Preview]\n"
-        f"To: {username}\n"
-        f"Subject: {subject}\n"
-        "-------------------------\n"
-        f"{message}\n"
-        "-------------------------\n"
-        "Please confirm whether you want to send this email. If you need to modify the content, please specify the changes; if you want to send it, please say 'Yes'."
-    )
-    print("[Email preview created]")
-    return email_preview
-
-#Please confirm the email information and send it
-@mcp.tool()
-async def confirm_send_email(receiver_email: str, subject: str, message: str) -> str:
-    """Send the email after user confirmation"""
-    print('[Send email tool used] Recipient email:', receiver_email)
-    print(f"To: {receiver_email}\nMessage:\n{message}")
-
-    # Read the key from the environment variable
-    app_password = os.getenv("APP_PASSWORD")
-
-    # Email content configuration
-    sender_email = "set your email address here"
-    app_password = app_password
-
-    # Create the email using UTF-8 encoding
-    message = MIMEText(message, "plain", "utf-8")
-    message["Subject"] = Header(subject, "utf-8")
-    message["From"] = sender_email
-    message["To"] = receiver_email
-
-    # Establish a secure connection with Gmail SMTP
-    try:
-        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
-            server.login(sender_email, app_password)
-            server.sendmail(sender_email, [receiver_email], message.as_string())
-        print("✅ Email sent successfully!")
-        return f"✅Email successfully sent to {receiver_email}!"
-    except Exception as e:
-        print("❌ Failed to send email：", e)
-        return f"❌ Failed to send email：{e}"
-
 #Query weather 
 @mcp.tool()
 async def get_weather(city: str) -> str:
@@ -146,8 +99,56 @@ async def get_weather(city: str) -> str:
     except Exception as e:
         return f"⚠️ An error occurred during the query：{e}"
 
+#Draft an email
+@mcp.tool()
+async def prepare_email(username: str, subject: str, message: str) -> str:
+    """Preview the email content and ask the user to confirm before sending"""
+    email_preview = (
+        "[📨 Email Preview]\n"
+        f"To: {username}\n"
+        f"Subject: {subject}\n"
+        "-------------------------\n"
+        f"{message}\n"
+        "-------------------------\n"
+        "Please confirm whether you want to send this email. If you need to modify the content, please specify the changes; if you want to send it, please say 'Yes'."
+    )
+    print("[Email preview created]")
+    return email_preview
+
+#Confirm the email information and send it
+@mcp.tool()
+async def confirm_send_email(receiver_email: str, subject: str, message: str) -> str:
+    """Send the email after user confirmation"""
+    print('[Send email tool used] Recipient email:', receiver_email)
+    print(f"To: {receiver_email}\nMessage:\n{message}")
+
+    # Read the key from the environment variable
+    app_password = os.getenv("APP_PASSWORD")
+
+    # Email content configuration
+    sender_email = "set your email address here"
+    app_password = app_password
+
+    # Create the email using UTF-8 encoding
+    message = MIMEText(message, "plain", "utf-8")
+    message["Subject"] = Header(subject, "utf-8")
+    message["From"] = sender_email
+    message["To"] = receiver_email
+
+    # Establish a secure connection with Gmail SMTP
+    try:
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+            server.login(sender_email, app_password)
+            server.sendmail(sender_email, [receiver_email], message.as_string())
+        print("✅ Email sent successfully!")
+        return f"✅Email successfully sent to {receiver_email}!"
+    except Exception as e:
+        print("❌ Failed to send email：", e)
+        return f"❌ Failed to send email：{e}"
+
 #Email summary
 #Allows to read all emails in the user's Gmail, but not modify, delete or send
+
 SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
 
 @mcp.tool()
@@ -175,6 +176,7 @@ async def fetch_inbox(n: int = 5) -> str:
     return "\n\n".join(summary_list) if summary_list else "📭 No emails found."
 
 #calendar
+
 SCOPES_CALENDAR = ['https://www.googleapis.com/auth/calendar']
 
 # Add event on Google Calendar
@@ -238,6 +240,7 @@ async def delete_event(event_id: str, calendar_id: str | None = None) -> str:
 
 if __name__ == "__main__":
     mcp.run(transport="streamable-http")
+
 
 
 
