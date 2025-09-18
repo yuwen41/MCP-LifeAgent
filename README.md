@@ -127,12 +127,12 @@ Before running the project, ensure the following:
 
 9. **`token_gmail.json` (for Gmail)**  
    - When you run a Gmail-related tool for the first time (e.g., quick_add_event), you will be automatically prompted to copy and paste the authorization URL into a browser and enter the verification code
-   - Once authorization is complete, a token_gmail.json file will be generated in your project directory
+   - Once authorization is complete, a **`token_gmail.json`** file will be generated in your project directory
    - For subsequent runs, the program will automatically use this file for authentication, so you won’t need to log in again
   
-10. **`token_gmail.json` (for Google Calendar)**  
+10. **`token_calendar.json` (for Google Calendar)**  
    - When you run a Calendar-related tool for the first time (e.g., quick_add_event), you will be automatically prompted to copy and paste the authorization URL into a browser and enter the verification code
-   - Once authorization is complete, a token_calendar.json file will be generated in your project directory
+   - Once authorization is complete, a **`token_calendar.json`** file will be generated in your project directory
    - For subsequent runs, the program will automatically use this file for authentication, so you won’t need to log in again
 
 ---
