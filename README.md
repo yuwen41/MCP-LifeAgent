@@ -1,4 +1,4 @@
-# 🚀 MCP Agent Project Guide
+# 🚀 OmniAssist Project Guide
 
 The MCP Agent is an AI-powered assistant that integrates multiple tools into one system. It is designed to streamline information retrieval, communication, and productivity.
 
