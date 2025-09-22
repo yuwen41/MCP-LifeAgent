@@ -1,7 +1,8 @@
-pip install langchain
-pip install langgraph
-pip install fastmcp
-pip install openai
-pip install google-api-python-client
-pip install google-auth-httplib2
-pip install google-auth-oauthlib
+langchain
+langgraph
+fastmcp
+openai
+google-api-python-client
+google-auth-httplib2
+google-auth-oauthlib
+
