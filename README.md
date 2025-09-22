@@ -63,6 +63,10 @@ MCP-LifeAgent is an AI-powered assistant that integrates multiple tools into one
      export APP_PASSWORD=''
      ```  
   3. Set your Gmail address inside the `sender_email` field of the script.
+  4. Run the server:
+     ```bash
+     python3 server_multi_tools.py
+     ```
 
 ---
 
