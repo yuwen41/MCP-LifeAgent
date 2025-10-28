@@ -6,27 +6,27 @@ MCP-LifeAgent is an AI-powered assistant that integrates multiple tools into one
 
 1. Google Search Integration
 
-   - Perform real-time web searches using Google’s Custom Search API.
+   - Perform real-time web searches using Google’s Custom Search API
 
-   - Retrieve accurate and up-to-date information directly from the internet.
+   - Retrieve accurate and up-to-date information directly from the internet
 
 2. Weather Information
 
-   - Get current weather conditions and forecasts.
+   - Get current weather conditions and forecasts
 
-   - Useful for quick daily updates or travel planning.
+   - Useful for quick daily updates or travel planning
 
 3. Email Drafting & Sending
 
-   - Automatically generate well-structured email drafts.
+   - Automatically generate well-structured email drafts
 
-   - Send emails directly through Gmail using a secure App Password.
+   - Send emails directly through Gmail using a secure App Password
 
 4. Email Summarization
 
-   - Fetch received emails and summarize their content.
+   - Fetch received emails and summarize their content
 
-   - Helps users quickly understand the main points without reading full messages.
+   - Helps users quickly understand the main points without reading full messages
 
 5. Managing Events on Google Calendar (Add & Delete)
    
