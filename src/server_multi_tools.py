@@ -201,22 +201,13 @@ async def quick_add_event(
         end = (event.get("end") or {}).get("dateTime") or (event.get("end") or {}).get("date")
 
 
-        return {
-                "status": "success",
-                "event_id": event_id,
-                "summary": summary,
-                "start": start,
-                "end": end,
-                "link": link,
-                "text": (
-                    "✅ QuickAdd created\n"
-                    f"🆔 Event ID: {event_id}\n"
-                    f"🗓 {summary}\n"
-                    f"   Start: {start}\n"
-                    f"   End:   {end}\n"
-                    f"🔗 {link}"
-                )
-            }
+        return (
+            f"✅ QuickAdd created!\n"
+            f"🗓 {summary}\n"
+            f"Start: {start}\n"
+            f"End: {end}\n"
+            f"🔗 {link}"
+        )
 
     except Exception as e:
         return f"❌ QuickAdd failed: {e}"
@@ -240,6 +231,7 @@ async def delete_event(event_id: str, calendar_id: str | None = None) -> str:
 
 if __name__ == "__main__":
     mcp.run(transport="streamable-http")
+
 
 
 
